@@ -3,32 +3,51 @@ require_once 'functions.php';
 $conn = connect_db();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT); //Hash password
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
 
-    $sql = "INSERT INTO coaches (username, password) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $password);
-
-    if ($stmt->execute()) {
-        echo "Регистрация прошла успешно!";
+    if (empty($username) || empty($password)) {
+        $error = "Пожалуйста, заполните все поля!";
     } else {
-        echo "Ошибка регистрации: " . $stmt->error; //Show error for debugging
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO coaches (username, password) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $username, $password);
+
+        if ($stmt->execute()) {
+            $success = "Регистрация прошла успешно! <a href='coach_login.php'>Войти</a>";
+        } else {
+            $error = "Ошибка регистрации: " . $stmt->error;
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 $conn->close();
 ?>
 
 <!DOCTYPE html>
 <html>
-<head><title>Регистрация администратора</title></head>
+<head>
+    <title>Регистрация тренера</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
-    <h1>Регистрация администратора</h1>
-    <form method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Зарегистрироваться">
-    </form>
+    <div class="container">
+        <h1>Регистрация тренера</h1>
+        <?php if (isset($error)): ?>
+            <p style="color: red;"><?php echo $error; ?></p>
+        <?php endif; ?>
+        <?php if (isset($success)): ?>
+            <p style="color: green;"><?php echo $success; ?></p>
+        <?php endif; ?>
+        <form method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br>
+            <input type="submit" value="Зарегистрироваться">
+            <a href="coach_login.php">Уже зарегистрированы? Войти</a>
+        </form>
+    </div>
 </body>
 </html>

@@ -10,12 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Пожалуйста, заполните все поля!";
     } else {
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO admins (username, password) VALUES (?, ?)";
+        $sql = "INSERT INTO athletes (username, password) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $username, $password);
 
         if ($stmt->execute()) {
-            $success = "Регистрация прошла успешно! <a href='admin_login.php'>Войти</a>";
+            $success = "Регистрация прошла успешно! <a href='athlete_login.php'>Войти</a>";
         } else {
             $error = "Ошибка регистрации: " . $stmt->error;
         }
@@ -28,12 +28,12 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Регистрация админа</title>
+    <title>Регистрация спортсмена</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Регистрация админа</h1>
+        <h1>Регистрация спортсмена</h1>
         <?php if (isset($error)): ?>
             <p style="color: red;"><?php echo $error; ?></p>
         <?php endif; ?>

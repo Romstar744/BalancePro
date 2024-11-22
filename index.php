@@ -18,13 +18,24 @@ $result = $conn->query($sql);
     </header>
 
     <nav>
-    <a href="admin_register.php" class="login-button">Регистрация администратора</a>
-    <a href="athlete_register.php" class="login-button">Регистрация спортсмена</a>
-    <a href="coach_register.php" class="login-button">Регистрация тренера</a>
+        <?php
+            // Simulate checking for registration (replace with actual session check)
+            $isRegistered = false; // Replace with a database check using sessions
+
+            if ($isRegistered) {
+              echo '<a href="admin_login.php" class="login-button">Вход Администратора</a>';
+              echo '<a href="athlete_login.php" class="login-button">Вход Спортсмена</a>';
+              echo '<a href="coach_login.php" class="login-button">Вход Тренера</a>';
+            } else {
+              echo '<a href="admin_register.php" class="login-button">Регистрация Администратора</a>';
+              echo '<a href="athlete_register.php" class="login-button">Регистрация Спортсмена</a>';
+              echo '<a href="coach_register.php" class="login-button">Регистрация Тренера</a>';
+            }
+        ?>
     </nav>
     <main>
         <h1>Расписание матчей</h1>
-        <table>
+        <table> 
             <thead>
                 <tr>
                     <th>Турнир</th>

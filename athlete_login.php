@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
 
-    $sql = "SELECT * FROM admins WHERE username = ?";
+    $sql = "SELECT * FROM athletes WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row["password"])) {
             session_start();
             $_SESSION["athlete_id"] = $row["id"]; // Set athlete session variable
-            header("Location: admin_panel.php"); // Redirect to athlete panel
+            header("Location: athlete_panel.php"); // Redirect to athlete panel
             exit();
         } else {
             $error = "Неверный пароль.";
@@ -33,12 +33,12 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Вход для админа</title>
+    <title>Вход для спортсмена</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Вход для админа</h1>
+        <h1>Вход для спортсмена</h1>
         <?php if (isset($error)): ?>
             <p style="color: red;"><?php echo $error; ?></p>
         <?php endif; ?>
