@@ -17,12 +17,11 @@ $result = $conn->query($sql);
         <img src="uploads/site_title.png" alt="Название сайта" class="site-title">
     </header>
 
-    <nav>  <!-- Navigation menu -->
-        <a href="admin_login.php" class="login-button">Вход для администратора</a>
-        <a href="athlete_login.php" class="login-button">Вход для спортсмена</a>
-        <a href="coach_login.php" class="login-button">Вход для тренера</a>
+    <nav>
+    <a href="admin_register.php" class="login-button">Регистрация администратора</a>
+    <a href="athlete_register.php" class="login-button">Регистрация спортсмена</a>
+    <a href="coach_register.php" class="login-button">Регистрация тренера</a>
     </nav>
-
     <main>
         <h1>Расписание матчей</h1>
         <table>
