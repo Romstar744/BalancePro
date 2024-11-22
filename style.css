@@ -1,0 +1,85 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    animation: pageLoadFadeIn 1s ease-in-out forwards;
+}
+
+@keyframes pageLoadFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#content {
+    padding-top: 60px; /* Отступ сверху для фиксированного заголовка */
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeInContent 1s ease-in-out forwards;
+}
+
+@keyframes fadeInContent {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.center-content {
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Новая секция welcome-header */
+.welcome-header {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    animation: fadeInWelcomeHeader 1s ease-in-out forwards;
+}
+
+@keyframes fadeInWelcomeHeader {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
