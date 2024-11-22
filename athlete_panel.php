@@ -8,6 +8,14 @@ if (!isset($_SESSION["athlete_id"])) {
 require_once 'functions.php';
 $conn = connect_db();
 
+// Fetch athlete's availability
+$athleteId = $_SESSION["athlete_id"];
+$sql = "SELECT date, time_interval FROM athlete_availability WHERE athlete_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $athleteId);
+$stmt->execute();
+$result = $stmt->get_result();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $athlete_id = $_SESSION["athlete_id"];
     $date = $_POST["date"];
@@ -28,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 }
-$conn->close();
 
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +51,13 @@ $conn->close();
   $( function() {
     $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
   } );
+  
+  function clearForm() {
+      document.getElementById("datepicker").value = "";
+      document.getElementById("time_interval").value = "";
+  }
 </script>
+
 <link rel="stylesheet" href="style.css">
 <style>
   .container {
@@ -51,35 +65,55 @@ $conn->close();
     flex-direction: column;
     align-items: center;
   }
-  label {
-    margin-top: 10px;
+  .availability-list {
+    width: 80%;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .availability-item {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
   }
 </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Панель спортсмена</h1>
-        <?php if (isset($success)): ?>
-            <p style="color: green;"><?php echo $success; ?></p>
-        <?php endif; ?>
-        <?php if (isset($error)): ?>
-            <p style="color: red;"><?php echo $error; ?></p>
-        <?php endif; ?>
-        <form method="post">
-            <label for="datepicker">Дата:</label>
-            <input type="text" id="datepicker" name="date" required>
-            <label for="time_interval">Время (в формате ЧЧ:ММ-ЧЧ:ММ):</label>
-            <input type="text" id="time_interval" name="time_interval" required>
-            <input type="submit" value="Сохранить">
-            <button type="button" onclick="clearForm()">Очистить</button>
-        </form>
+<div class="container">
+    <h1>Панель спортсмена</h1>
+    <?php if (isset($success)): ?>
+        <p style="color: green;"><?php echo $success; ?></p>
+    <?php endif; ?>
+    <?php if (isset($error)): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php endif; ?>
 
-        <script>
-          function clearForm() {
-            document.getElementById("datepicker").value = "";
-            document.getElementById("time_interval").value = "";
+    <form method="post">
+        <label for="datepicker">Дата:</label>
+        <input type="text" id="datepicker" name="date" required>
+        <label for="time_interval">Время (в формате ЧЧ:ММ-ЧЧ:ММ):</label>
+        <input type="text" id="time_interval" name="time_interval" required>
+        <input type="submit" value="Сохранить">
+        <button type="button" onclick="clearForm()">Очистить</button>
+    </form>
+    
+   <div class="availability-list">
+    <?php
+      if ($result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+              echo '<div class="availability-item">';
+              echo 'Дата: ' . $row["date"] . '<br>';
+              echo 'Время: ' . $row["time_interval"] . '<br>';
+              echo '</div>';
           }
-        </script>
-    </div>
+      } else {
+          echo "<p>У вас нет запланированных занятостей.</p>";
+      }
+    ?>
+   </div>
+
+</div>
+
 </body>
 </html>

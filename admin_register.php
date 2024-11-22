@@ -46,7 +46,7 @@ $conn->close();
             <label for="password">Password:</label>
             <input type="password" id="password" name="password"><br>
             <input type="submit" value="Зарегистрироваться">
-            <a href="coach_login.php">Уже зарегистрированы? Войти</a>
+            <a href="admin_login.php">Уже зарегистрированы? Войти</a>
         </form>
     </div>
 </body>
