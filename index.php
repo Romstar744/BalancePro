@@ -13,9 +13,15 @@ $result = $conn->query($sql);
 </head>
 <body>
     <header>
-        <img src="uploads/logo.png" alt="Название сайта" class="logo">
-        <img src="uploads/site_title.png" alt="Логотип" class="site_title">
+        <img src="uploads/logo.png" alt="Логотип" class="logo">
+        <img src="uploads/site_title.png" alt="Название сайта" class="site-title">
     </header>
+
+    <nav>  <!-- Navigation menu -->
+        <a href="admin_login.php" class="login-button">Вход для администратора</a>
+        <a href="athlete_login.php" class="login-button">Вход для спортсмена</a>
+        <a href="coach_login.php" class="login-button">Вход для тренера</a>
+    </nav>
 
     <main>
         <h1>Расписание матчей</h1>
@@ -46,6 +52,7 @@ $result = $conn->query($sql);
             </tbody>
         </table>
     </main>
+
     <?php $conn->close(); ?>
 </body>
 </html>

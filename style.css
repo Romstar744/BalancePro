@@ -7,7 +7,7 @@ body {
 
 header {
     display: flex;
-    justify-content: space-around; /* Distribute space around items */
+    justify-content: space-around;
     align-items: center;
     background-color: black;
     color: white;
@@ -16,19 +16,19 @@ header {
 }
 
 .site-title, .logo {
-    max-width: 100px;
-    height: auto;
     border: 2px solid black;
     padding: 5px;
     border-radius: 5px;
 }
 
-.site-title {
-    text-align: center;
+.logo {
+    max-width: 100px; /* Keep logo small */
+    height: auto;
 }
 
-
-.logo {
+.site-title {
+    text-align: center;
+    /* Remove max-width and let the image expand */
 }
 
 main {
@@ -61,4 +61,27 @@ th, td {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+nav {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.login-button {
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #45a049;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
 }
