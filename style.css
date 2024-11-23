@@ -1,16 +1,16 @@
 body {
-    font-family: 'Arial', sans-serif; 
+    font-family: 'Arial', sans-serif; /* Specify a font */
     margin: 0;
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     padding: 20px;
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    min-height: 300vh; 
+    flex-direction: column; /* Align content vertically */
+    align-items: center; /* Center content horizontally */
+    min-height: 300vh; /* Ensure full viewport height */
     overflow: auto;
 }
 
-
+/* Фоновое изображение */
 .background {
     position: absolute;
     top: 0;
@@ -21,7 +21,7 @@ body {
     background-size: cover;
     background-position: center;
     z-index: 1;
-    filter: blur(5px); 
+    filter: blur(5px); /* Adjust blur radius as needed */
 }
 
 .background::before {
@@ -31,8 +31,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 255, 0.5);
-    filter: blur(10px); 
+    background: rgba(0, 0, 255, 0.5); /* Increased blue glow opacity */
+    filter: blur(10px); /* Increased glow blur radius */
     mix-blend-mode: overlay;
     z-index: 2;
 }
@@ -48,6 +48,7 @@ body {
     z-index: 3;
 }
 
+/* Размытие */
 .background::before {
     content: '';
     position: absolute;
@@ -55,29 +56,30 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: inherit; 
-    filter: blur(4px); 
-    z-index: 2; 
+    background: inherit; /* Наследует свойства фона родителя */
+    filter: blur(4px); /* Устанавливаем уровень размытия */
+    z-index: 2; /* Слой с размытой картинкой выше */
 }
 
+/* Контент страницы */
 .content {
-    position: relative;
-    z-index: 3; 
-    color: white; 
-    text-align: center; 
-    padding-top: 20px; 
-    flex-direction: column; 
-    align-items: center; 
-    min-height: 100vh; 
+    position: relative; /* Для размещения текста поверх размытого фона */
+    z-index: 3; /* Выше остальных слоев */
+    color: white; /* Цвет текста */
+    text-align: center; /* Центрирование текста */
+    padding-top: 20px; /* Отступ сверху */
+    flex-direction: column; /* Align content vertically */
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Ensure full viewport height */
 }
 
 .container {
-    background-color: #333;
+    background-color: #302f2f;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    width: 80%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 700px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
@@ -120,7 +122,7 @@ button:hover {
 header {
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--main-color);
-    position: relative; 
+    position: relative; /* Needed to position the pseudo-element */
     padding: 3rem;
     height: 7rem;
     top: -100px;
@@ -137,13 +139,13 @@ header::before {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
-    width: calc(100% + 50px); 
-    height: calc(100% + 50px); 
-    background: rgba(35, 69, 145, 0.4); 
-    border-radius: inherit; 
-    filter: blur(10px); 
-    z-index: -1; 
+    transform: translate(-50%, -50%); /* Center the glow */
+    width: calc(100% + 50px); /* Adjust 20px for glow size */
+    height: calc(100% + 50px); /* Adjust 20px for glow size */
+    background: rgba(35, 69, 145, 0.4); /* Blue glow color and opacity */
+    border-radius: inherit; /* Inherit border-radius from header */
+    filter: blur(10px); /* Adjust blur radius for glow intensity */
+    z-index: -1; /* Place glow behind the header */
 }
 
 .logo {
@@ -163,26 +165,26 @@ header::before {
 table {
     width: 80%;
     margin: 20px auto;
-    border-collapse: collapse; 
-    border-radius: 8px; 
-    overflow: hidden; 
+    border-collapse: collapse; /* Remove default cell spacing */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Hide overflowing content */
 }
 
 .tablica {
-    width: 100%; 
-    aspect-ratio: 1 / 1; 
+    width: 100%; /* Or any width */
+    aspect-ratio: 1 / 1; /* 1:1 aspect ratio for a square */
     background-color: rgba(93, 101, 119, 0.1);
 }
 
 th, td {
     padding: 7px;
     text-align: center;
-    border: 1px solid #333;
-    background-color: rgba(73, 80, 95, 0.1); 
+    border: 1px solid #333; /* Darker border */
+    background-color: rgba(73, 80, 95, 0.1); /* Slightly lighter cell background */
 }
 
 th {
-    background-color: rgba(73, 80, 95, 0.2);
+    background-color: rgba(73, 80, 95, 0.2); /* Darker header background */
     font-weight: bold;
 }
 
@@ -198,7 +200,7 @@ nav {
     margin-bottom: 20px;
     display: flex;
     justify-content: space-around;
-    width: 80%; 
+    width: 80%; /* Adjust width as needed */
 }
 
 .login-button {
@@ -219,15 +221,16 @@ nav {
     box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
     header, main, nav {
-        width: 95%; 
+        width: 95%; /* Adjust width for smaller screens */
     }
 }
 
 form {
-    width: 300px; 
-    margin: 20px auto; 
+    width: 300px; /* Adjust as needed */
+    margin: 20px auto; /* Center the form */
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
@@ -242,7 +245,7 @@ label {
 input[type="text"],
 input[type="password"],
 input[type="tel"],
-input[type="date"] { 
+input[type="date"] { /*Added date input*/
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -266,20 +269,20 @@ input[type="submit"]:hover {
 }
 
 a {
-    display: block; 
+    display: block; /* Makes the link take the full width of its container */
     text-align: center;
     margin-top: 10px;
-    text-decoration: none; 
-    color: #007bff; 
+    text-decoration: none; /* Remove underlines from links */
+    color: #007bff; /* Blue links */
 }
 
 a:hover {
-    text-decoration: underline; 
+    text-decoration: underline; /* Add underline on hover */
 }
 
 .pagination {
     display: flex;
-    justify-content: space-around; 
+    justify-content: space-around; /* Distribute space evenly */
     width: 100%;
     margin-top: 10px;
     align-items: center;
@@ -293,15 +296,15 @@ a:hover {
 
 .pagination-date {
     text-align: center;
-    flex: 1; 
+    flex: 1; /* Allows the date span to take up the remaining space */
     font-size:16px;
 }
 .first-date {
-    text-align: left; 
+    text-align: left; /* Align first date to the left */
 }
 
 .last-date {
-    text-align: right; 
+    text-align: right; /* Align last date to the right */
 }
 
 .pagination-button {
@@ -310,29 +313,30 @@ a:hover {
     border-radius: 5px;
     cursor: pointer;
     font-size: 15px;
-    background-color: #007bff; 
+    background-color: #007bff; /* Blue */
     color: white;
     text-align: center;
-    flex: 0 0 auto; 
-    min-width: 120px; 
+    flex: 0 0 auto; /* Prevents buttons from expanding */
+    min-width: 120px; /* Minimum width for the buttons */
 }
 
 .pagination-button.prev {
-    background-color: #007bff; 
+    background-color: #007bff; /* Blue color for "Previous" button */
     color: white;
 }
 
 .pagination-button.next {
-    background-color: #28a745; 
+    background-color: #28a745; /* Green color for "Next" button */
     color: white;
 }
 
 
 .pagination-button:disabled {
-    opacity: 0.5; 
+    opacity: 0.5; /* Make disabled buttons semi-transparent */
     cursor: default;
 }
 
+/*Optional: Add hover effect*/
 .pagination-button:hover:not(:disabled) {
     opacity: 0.8;
 }

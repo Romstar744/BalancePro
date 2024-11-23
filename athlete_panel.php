@@ -185,7 +185,7 @@ $conn->close();
             }
             ?>
         </ul>
-
+        <a href="index.php" class="return-button">Назад на главную страницу</a>
     </div>
 </body>
 </html>
