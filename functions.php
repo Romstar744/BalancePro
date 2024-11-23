@@ -68,13 +68,46 @@ function getAssignedAthletes($coachId, $conn){
   return $result;
 }
 
+// Function to delete a coach assignment
 function deleteCoachAssignment($conn, $assignmentId) {
     $sql = "DELETE FROM coach_athlete_assignments WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
+    if ($stmt) {
+        $stmt->bind_param("i", $assignmentId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    } else {
         return false;
     }
-    $stmt->bind_param("i", $assignmentId);
-    return $stmt->execute();
+}
+
+
+// Function to delete an athlete availability entry
+function deleteAthleteAvailability($conn, $availabilityId) {
+    $sql = "DELETE FROM athlete_availability WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param("i", $availabilityId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+// Function to update an athlete availability entry
+function updateAthleteAvailability($conn, $availabilityId, $date, $timeInterval) {
+    $sql = "UPDATE athlete_availability SET date = ?, time_interval = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param("ssi", $date, $timeInterval, $availabilityId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    } else {
+        return false;
+    }
 }
 ?>
