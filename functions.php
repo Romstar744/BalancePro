@@ -67,4 +67,14 @@ function getAssignedAthletes($coachId, $conn){
   $result = $stmt->get_result();
   return $result;
 }
+
+function deleteCoachAssignment($conn, $assignmentId) {
+    $sql = "DELETE FROM coach_athlete_assignments WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        return false;
+    }
+    $stmt->bind_param("i", $assignmentId);
+    return $stmt->execute();
+}
 ?>
