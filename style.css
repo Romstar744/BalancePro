@@ -293,3 +293,40 @@ a:hover {
 .pagination-button:hover:not(:disabled) {
     opacity: 0.8;
 }
+
+.registration-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center horizontally */
+    gap: 20px; /* Increased gap for better spacing */
+    margin-top: 20px; /* Add some top margin for separation */
+    margin-bottom: 20px; /* Add some bottom margin for separation */
+}
+
+.registration-links a {
+    flex: 1 0 200px; /* Adjust 200px to your desired minimum width */
+    text-align: center;
+    padding: 15px 20px; /* Increased padding for better button size */
+    border-radius: 8px;  /* Added rounded corners */
+    text-decoration: none; /* Remove underlines from links */
+    color: white; /* White text */
+    background-color: #007bff; /* Blue background */
+    transition: background-color 0.3s ease; /* Add smooth hover effect */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle box shadow */
+}
+
+.registration-links a:hover {
+    background-color: #0069d9; /* Darker blue on hover */
+}
+
+/*Optional: Responsive adjustments for smaller screens*/
+@media (max-width: 768px) {
+    .registration-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    .registration-links a {
+        flex-basis: 100%;
+        min-width: auto;
+    }
+}
