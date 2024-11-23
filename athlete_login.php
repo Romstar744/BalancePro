@@ -1,5 +1,5 @@
 <?php
-require_once 'functions.php'; // Include your database connection and helper functions
+require_once 'functions.php';
 $conn = connect_db();
 $error = "";
 
@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = sanitizeInput($_POST["username"]);
     $password = sanitizeInput($_POST["password"]);
 
-    //1. Check if the username exists:
     $sql = "SELECT id, username, password FROM athletes WHERE username = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt) {
@@ -16,14 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $stmt->get_result();
 
         if ($result->num_rows == 1) {
-            //2. Username found - check the password
             $athlete = $result->fetch_assoc();
             if (password_verify($password, $athlete["password"])) {
-                //3. Password matches - Start the session
                 session_start();
                 $_SESSION["athlete_id"] = $athlete["id"];
                 $_SESSION["athlete_logged_in"] = true;
-                header("Location: athlete_panel.php"); // Redirect to athlete panel
+                header("Location: athlete_panel.php"); 
                 exit();
             } else {
                 $error = "Неверный пароль.";
@@ -38,8 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 $conn->close();
 
-
-//Sanitize user input function (prevent SQL injection)
 function sanitizeInput($data) {
     global $conn;
     $data = trim($data);

@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Admin authentication.  REPLACE with your actual admin authentication logic.
 if (!isset($_SESSION["admin_id"]) || !$_SESSION["admin_logged_in"]) {
     header("Location: admin_login.php");
     exit();
@@ -9,12 +8,11 @@ if (!isset($_SESSION["admin_id"]) || !$_SESSION["admin_logged_in"]) {
 
 require_once 'functions.php';
 
-$conn = connect_db(); //Assuming connect_db() is in functions.php
+$conn = connect_db();
 
 $error = null;
 $success = null;
 
-// Function to sanitize user input (crucial for security)
 function sanitizeInput($data) {
     global $conn;
     $data = trim($data);
@@ -23,33 +21,28 @@ function sanitizeInput($data) {
     return $conn->real_escape_string($data);
 }
 
-// Fetch coach assignments using prepared statement for security
 $sqlCoachAssignments = "SELECT caa.id, c.first_name AS coach_first_name, c.last_name AS coach_last_name, a.first_name AS athlete_first_name, a.last_name AS athlete_last_name, caa.date, caa.time_interval FROM coach_athlete_assignments caa JOIN coaches c ON caa.coach_id = c.id JOIN athletes a ON caa.athlete_id = a.id";
 $stmtCoachAssignments = $conn->prepare($sqlCoachAssignments);
 
 if ($stmtCoachAssignments) {
     $stmtCoachAssignments->execute();
     $resultCoachAssignments = $stmtCoachAssignments->get_result();
-    $stmtCoachAssignments->close(); //Important: Close the statement
+    $stmtCoachAssignments->close();
 } else {
     $error = "Ошибка при подготовке запроса о назначениях тренеров: " . $conn->error;
 }
 
-// Fetch athlete availability using prepared statement for security
 $sqlAthleteAvailability = "SELECT aa.id, a.first_name AS athlete_first_name, a.last_name AS athlete_last_name, aa.date, aa.time_interval FROM athlete_availability aa JOIN athletes a ON aa.athlete_id = a.id";
 $stmtAthleteAvailability = $conn->prepare($sqlAthleteAvailability);
 
 if ($stmtAthleteAvailability) {
     $stmtAthleteAvailability->execute();
     $resultAthleteAvailability = $stmtAthleteAvailability->get_result();
-    $stmtAthleteAvailability->close(); //Important: Close the statement
+    $stmtAthleteAvailability->close();
 } else {
     $error = "Ошибка при подготовке запроса о доступности спортсменов: " . $conn->error;
 }
 
-
-
-// Handle deletion of coach assignments
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_coach_assignment"])) {
     $assignmentId = sanitizeInput($_POST["assignment_id"]);
     if (deleteCoachAssignment($conn, $assignmentId)) {
@@ -61,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_coach_assignmen
     exit();
 }
 
-// Handle update of athlete availability
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_athlete_availability"])) {
     $availabilityId = sanitizeInput($_POST["availability_id"]);
     $date = sanitizeInput($_POST["date"]);
@@ -76,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_athlete_availab
     exit();
 }
 
-//Handle deletion of athlete availability
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_athlete_availability"])) {
     $availabilityId = sanitizeInput($_POST["availability_id"]);
     if (deleteAthleteAvailability($conn, $availabilityId)) {
@@ -89,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_athlete_availab
 }
 
 
-$conn->close(); // Close the database connection
+$conn->close(); 
 
 ?>
 

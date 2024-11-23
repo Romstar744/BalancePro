@@ -1,13 +1,10 @@
 <?php
 require_once 'functions.php';
 $conn = connect_db();
-
-// Pagination logic
 $matchesPerPage = 6;
 $currentPage = isset($_GET["page"]) && is_numeric($_GET["page"]) ? (int)$_GET["page"] : 1;
-$currentPage = max(1, $currentPage); // Ensure currentPage is at least 1
+$currentPage = max(1, $currentPage);
 
-// Get total number of matches
 $totalMatchesSql = "SELECT COUNT(*) AS total FROM matches";
 $totalMatchesResult = $conn->query($totalMatchesSql);
 if (!$totalMatchesResult) {
@@ -17,12 +14,10 @@ $totalMatchesRow = $totalMatchesResult->fetch_assoc();
 $totalMatches = $totalMatchesRow['total'];
 $totalPages = ceil($totalMatches / $matchesPerPage);
 
-// Handle invalid page numbers
 if ($currentPage > $totalPages && $totalPages > 0) {
-    $currentPage = $totalPages; // Redirect to last page if current page exceeds total pages
+    $currentPage = $totalPages; 
 }
 
-// Paginated query
 $offset = ($currentPage - 1) * $matchesPerPage;
 $sqlPaginated = "SELECT * FROM matches LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($sqlPaginated);
@@ -38,27 +33,26 @@ if (!$resultPaginated) {
     die("Ошибка при получении данных о матчах: " . $conn->error);
 }
 
-// Fetch first and last match dates for the current page
 $firstMatchDate = '';
 $lastMatchDate = '';
 if ($resultPaginated->num_rows > 0) {
-    $resultPaginated->data_seek(0); // Rewind to the beginning
+    $resultPaginated->data_seek(0); 
     $firstMatchRow = $resultPaginated->fetch_assoc();
     $firstMatchDate = $firstMatchRow['date'];
 
-    $resultPaginated->data_seek($resultPaginated->num_rows - 1); // Go to the last row
+    $resultPaginated->data_seek($resultPaginated->num_rows - 1); 
     $lastMatchRow = $resultPaginated->fetch_assoc();
     $lastMatchDate = $lastMatchRow['date'];
 
-    $resultPaginated->data_seek(0); // Rewind back to the beginning for the loop
+    $resultPaginated->data_seek(0); 
 }
 
 
-// Session handling
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $isRegistered = isset($_SESSION['user_id']);
+
 
 ?>
 
@@ -67,40 +61,59 @@ $isRegistered = isset($_SESSION['user_id']);
 <head>
     <title>Balance Pro - Политех</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
 </head>
 <body>
     <div class="background"></div>
-    <div class="content">
-        <header>
-            <img src="uploads/logo.svg" alt="Логотип" class="logo">
-            <img src="uploads/site_title.svg" alt="Название сайта" class="site-title">
-        </header>
-        <nav>
-            <?php
-            if ($isRegistered) {
-                echo '<a href="logout.php" class="login-button">Выход</a>';
-                if ($_SESSION['user_type'] == 'admin') {
-                    echo '<a href="admin_panel.php" class="login-button">Админ панель</a>';
-                } elseif ($_SESSION['user_type'] == 'athlete') {
-                    echo '<a href="athlete_panel.php" class="login-button">Панель спортсмена</a>';
-                } elseif ($_SESSION['user_type'] == 'coach') {
-                    echo '<a href="coach_panel.php" class="login-button">Панель тренера</a>';
-                }
-            } else {
-                echo '<a href="admin_register.php" class="login-button">Регистрация/Вход Администратора</a>';
-                echo '<a href="athlete_register.php" class="login-button">Регистрация/Вход Спортсмена</a>';
-                echo '<a href="coach_register.php" class="login-button">Регистрация/Вход Тренера</a>';
-            }
-            ?>
-        </nav>
-        <div class="tablica">
-            <h1>Расписание матчей</h1>
-            <div class="pagination">
-                <button class="pagination-button prev" <?php if ($currentPage <= 1) echo 'disabled'; ?>>
-                    <i class="fas fa-chevron-left"></i> Назад
-                </button>
-                <span class="pagination-date">
+        <div class="content">
+            <div>
+                <header>
+                    <img src="uploads/logo.svg" alt="Логотип" class="logo">
+                    <img src="uploads/site_title.svg" alt="Название сайта" class="site-title">
+                </header>
+            </div>
+            <div class="container">
+                <div class="titlereg">Регистрация/Войти в аккаунт</div>
+                    <ul class="list">
+                        <?php
+                            $isRegistered = false; 
+
+                            if ($isRegistered) {
+                                echo '<a href="admin_login.php" class="login-button">Администратор</a>';
+                                echo '<a href="athlete_login.php" class="login-button">Спортсмен</a>';
+                                echo '<a href="coach_login.php" class="login-button">Тренер</a>';
+                            } else {
+                                echo '<a href="admin_register.php" class="login-button">Администратор</a>';
+                                echo '<a href="athlete_register.php" class="login-button">Спортсмен</a>';
+                                echo '<a href="coach_register.php" class="login-button">Тренер</a>';
+                        }
+                        ?>
+                    </ul>
+                </div>
+
+                <div class="container">
+                <div class="titlebalance">BalancePro</div>
+                <div class="textalgoritm">Это инновационный алгоритм, который помогает спортивным командам находить оптимальные дни для проведения матчей. Мы учитываем график обучения студентов, чтобы обеспечить баланс между учебной нагрузкой и спортивными мероприятиями.</div>
+            </div>
+
+            <div class="container">
+                <div class="titlecluch">Наши ключевые преимущества:</div>
+                <ul class="list">
+                    <li>Интеллектуальный анализ данных: алгоритм учитывает расписания занятий, экзамены, и другие ключевые события в учебной жизни.</li>
+                    <li>Повышение эффективности: мы подбираем дни, когда студенты наиболее свободны, чтобы максимально увеличить вовлечённость и успешность команды.</li>
+                    <li>Гибкость настройки: система адаптируется под уникальные графики и потребности различных учебных учреждений и команд.</li>
+                </ul>
+            </div>
+
+            <button>Чёрные медведи</button>
+
+            <div class="tablica">
+                <h1>Расписание матчей</h1>
+                    <div class="pagination">
+                        <button class="pagination-button prev" <?php if ($currentPage <= 1) echo 'disabled'; ?>>
+                            <i class="fas fa-chevron-left"></i> Назад
+                        </button>
+                    <span class="pagination-date">
                     <?php if (!empty($firstMatchDate)): ?>
                         <?php echo date("d.m.Y", strtotime($firstMatchDate)); ?> - <?php echo date("d.m.Y", strtotime($lastMatchDate)); ?>
                     <?php endif; ?>
@@ -136,8 +149,8 @@ $isRegistered = isset($_SESSION['user_id']);
                 </tbody>
             </table>
         </div>
+        </div>
     </div>
-
     <script>
         const prevButton = document.querySelector('.prev');
         const nextButton = document.querySelector('.next');
@@ -156,6 +169,6 @@ $isRegistered = isset($_SESSION['user_id']);
             }
         });
     </script>
-    <?php $stmt->close(); $conn->close(); ?>
+    <?php $conn->close(); ?>
 </body>
 </html>

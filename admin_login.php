@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = sanitizeInput($_POST["username"]);
     $password = sanitizeInput($_POST["password"]);
 
-    $sql = "SELECT id, username, password FROM admins WHERE username = ?"; // Select only necessary columns
+    $sql = "SELECT id, username, password FROM admins WHERE username = ?"; 
     $stmt = $conn->prepare($sql);
     if ($stmt) {
         $stmt->bind_param("s", $username);
@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = $result->fetch_assoc();
             if (password_verify($password, $row["password"])) {
                 session_start();
-                $_SESSION["admin_id"] = $row["id"]; // Correct session variable name
-                $_SESSION["admin_logged_in"] = true; //Set admin logged in flag
+                $_SESSION["admin_id"] = $row["id"]; 
+                $_SESSION["admin_logged_in"] = true; 
                 header("Location: admin_panel.php");
                 exit();
             } else {
@@ -28,16 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $error = "Пользователь не найден.";
         }
-        $stmt->close(); // Close the prepared statement
+        $stmt->close(); 
     } else {
         $error = "Ошибка при подготовке запроса: " . $conn->error;
     }
 }
 $conn->close();
 
-// Sanitize user input function (prevent SQL injection)
 function sanitizeInput($data) {
-    //This function should be in your functions.php file.
     global $conn;
     $data = trim($data);
     $data = stripslashes($data);

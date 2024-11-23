@@ -1,10 +1,10 @@
 <?php
 
 function connect_db() {
-    $servername = "localhost"; //Change to your server
-    $username = "starostin_Bears"; //Change to your username
-    $password = "Admin123*"; //Change to your password
-    $dbname = "starostin_Bears"; //Change to your db name
+    $servername = "localhost";
+    $username = "starostin_Bears"; 
+    $password = "Admin123*"; 
+    $dbname = "starostin_Bears"; 
 
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
@@ -68,7 +68,6 @@ function getAssignedAthletes($coachId, $conn){
   return $result;
 }
 
-// Function to delete a coach assignment
 function deleteCoachAssignment($conn, $assignmentId) {
     $sql = "DELETE FROM coach_athlete_assignments WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -83,7 +82,6 @@ function deleteCoachAssignment($conn, $assignmentId) {
 }
 
 
-// Function to delete an athlete availability entry
 function deleteAthleteAvailability($conn, $availabilityId) {
     $sql = "DELETE FROM athlete_availability WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -97,7 +95,6 @@ function deleteAthleteAvailability($conn, $availabilityId) {
     }
 }
 
-// Function to update an athlete availability entry
 function updateAthleteAvailability($conn, $availabilityId, $date, $timeInterval) {
     $sql = "UPDATE athlete_availability SET date = ?, time_interval = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);

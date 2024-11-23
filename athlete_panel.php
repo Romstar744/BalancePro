@@ -10,7 +10,6 @@ $conn = connect_db();
 
 $athleteId = $_SESSION["athlete_id"];
 
-// Fetch athlete's info
 $sqlAthleteInfo = "SELECT first_name, last_name, patronymic, birthdate, DATE_FORMAT(birthdate, '%d.%m.%Y') AS formatted_birthdate FROM athletes WHERE id = ?";
 $stmtAthleteInfo = $conn->prepare($sqlAthleteInfo);
 if ($stmtAthleteInfo === false) {
@@ -26,9 +25,6 @@ if ($stmtAthleteInfo === false) {
     }
 }
 
-
-
-// Fetch athlete's availability
 $sqlAvailability = "SELECT date, time_interval FROM athlete_availability WHERE athlete_id = ?";
 $stmtAvailability = $conn->prepare($sqlAvailability);
 if ($stmtAvailability === false) {
@@ -63,7 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmtInsert->bind_param("iss", $athleteId, $date, $time_interval);
                 if ($stmtInsert->execute()) {
                     $success = "Запись добавлена!";
-                    // Re-fetch availability data after successful insertion
                     $stmtAvailability->execute();
                     $resultAvailability = $stmtAvailability->get_result();
                 } else {

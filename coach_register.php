@@ -10,11 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST["password"]);
     $phone = trim($_POST["phone"]);
 
-    // Input validation
     if (empty($firstName) || empty($lastName) || empty($username) || empty($password) || empty($phone)) {
         $error = "Заполните все поля!";
     } else {
-        // Check if username already exists
         $checkUsername = "SELECT * FROM coaches WHERE username = ?";
         $stmtCheck = $conn->prepare($checkUsername);
         $stmtCheck->bind_param("s", $username);
@@ -24,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($resultCheck->num_rows > 0) {
             $error = "Пользователь с таким именем уже существует!";
         } else {
-            // Check if phone number already exists
             $checkPhone = "SELECT * FROM coaches WHERE phone = ?";
             $stmtPhone = $conn->prepare($checkPhone);
             $stmtPhone->bind_param("s", $phone);
