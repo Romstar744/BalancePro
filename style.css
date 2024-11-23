@@ -2,11 +2,11 @@ body {
     font-family: 'Arial', sans-serif; /* Specify a font */
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
     display: flex;
     flex-direction: column; /* Align content vertically */
     align-items: center; /* Center content horizontally */
     min-height: 100vh; /* Ensure full viewport height */
+    overflow: hidden;
 }
 
 /* Фоновое изображение */
@@ -16,10 +16,35 @@ body {
     left: 0;
     width: 100%;
     height: 110%;
-    background-image: url('uploads/image.svg');
+    background-image: url('uploads/image.png');
     background-size: cover;
     background-position: center;
-    z-index: 1; /* Размещаем слой с изображением ниже */
+    z-index: 1;
+    filter: blur(5px); /* Adjust blur radius as needed */
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 255, 0.5); /* Increased blue glow opacity */
+    filter: blur(15px); /* Increased glow blur radius */
+    mix-blend-mode: overlay;
+    z-index: 2;
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)); /* Increased darkening opacity */
+    z-index: 3;
 }
 
 /* Размытие */
@@ -48,61 +73,80 @@ body {
 }
 
 header {
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black header */
+    background-color: rgba(0, 0, 0, 0.8);
     color: var(--main-color);
-    padding: 2rem;
+    position: relative; /* Needed to position the pseudo-element */
+    padding: 3rem;
+    height: 7rem;
+    top: -100px;
     margin-bottom: 2rem;
-    border-radius: 1rem;
+    border-radius: 4rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
-    align-items: flex-end; /* Align items to the bottom */
-    justify-content: space-between; 
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the glow */
+    width: calc(100% + 50px); /* Adjust 20px for glow size */
+    height: calc(100% + 50px); /* Adjust 20px for glow size */
+    background: rgba(35, 69, 145, 0.4); /* Blue glow color and opacity */
+    border-radius: inherit; /* Inherit border-radius from header */
+    filter: blur(10px); /* Adjust blur radius for glow intensity */
+    z-index: -1; /* Place glow behind the header */
 }
 
 .logo {
-    max-width: 100px;
+    max-width: 70px;
     justify-content: flex-end;
+    margin-right: 10px;
 }
 
 .site-title {
-    font-size: 2rem;
+    height: 50%;
+    weight: 50%;
     text-align: center; 
     flex-grow: 1; 
     justify-content: flex-end;
 }
 
-
-main {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 80%; /* Adjust width as needed */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse; /* Remove default cell spacing */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Hide overflowing content */
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.tablica {
+    width: 100%; /* Or any width */
+    aspect-ratio: 1 / 1; /* 1:1 aspect ratio for a square */
+    background-color: rgba(93, 101, 119, 0.1);
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    padding: 7px;
+    text-align: center;
+    border: 1px solid #333; /* Darker border */
+    background-color: rgba(73, 80, 95, 0.1); /* Slightly lighter cell background */
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: rgba(73, 80, 95, 0.2); /* Darker header background */
     font-weight: bold;
 }
 
 th, td {
-  border: 1px solid #dddddd;
+  border: 3px solid rgba(73, 80, 95, 0.71);
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: rgba(73, 80, 95, 0.2);
 }
 
 nav {
@@ -187,4 +231,65 @@ a {
 
 a:hover {
     text-decoration: underline; /* Add underline on hover */
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-around; /* Distribute space evenly */
+    width: 100%;
+    margin-top: 10px;
+    align-items: center;
+}
+
+
+.pagination-item {
+    display: flex;
+    align-items: left;
+}
+
+.pagination-date {
+    text-align: center;
+    flex: 1; /* Allows the date span to take up the remaining space */
+    font-size:16px;
+}
+.first-date {
+    text-align: left; /* Align first date to the left */
+}
+
+.last-date {
+    text-align: right; /* Align last date to the right */
+}
+
+.pagination-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: #007bff; /* Blue */
+    color: white;
+    text-align: center;
+    flex: 0 0 auto; /* Prevents buttons from expanding */
+    min-width: 120px; /* Minimum width for the buttons */
+}
+
+.pagination-button.prev {
+    background-color: #007bff; /* Blue color for "Previous" button */
+    color: white;
+}
+
+.pagination-button.next {
+    background-color: #28a745; /* Green color for "Next" button */
+    color: white;
+}
+
+
+.pagination-button:disabled {
+    opacity: 0.5; /* Make disabled buttons semi-transparent */
+    cursor: default;
+}
+
+/*Optional: Add hover effect*/
+.pagination-button:hover:not(:disabled) {
+    opacity: 0.8;
 }
