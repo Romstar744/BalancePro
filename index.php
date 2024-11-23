@@ -13,8 +13,8 @@ $result = $conn->query($sql);
 </head>
 <body>
     <header>
-        <img src="uploads/logo.png" alt="Логотип" class="logo">
-        <img src="uploads/site_title.png" alt="Название сайта" class="site-title">
+        <img src="uploads/logo.svg" alt="Логотип" class="logo">
+        <img src="uploads/site_title.svg" alt="Название сайта" class="site-title">
     </header>
 
     <nav>
