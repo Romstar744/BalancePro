@@ -48,7 +48,7 @@ function sanitizeInput($data) {
 <html>
 <head>
     <title>Вход для админа</title>
-    <link rel="stylesheet" href="style.css"> </head>
+    <link rel="stylesheet" href="style-admin.css"> </head>
 <body>
     <div class="container">
         <h1>Вход для админа</h1>

@@ -6,9 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
 
+    // Input validation
     if (empty($username) || empty($password)) {
         $error = "Заполните все поля!";
     } else {
+        //Check if username already exists
         $checkUsername = "SELECT * FROM admins WHERE username = ?";
         $stmtCheck = $conn->prepare($checkUsername);
         $stmtCheck->bind_param("s", $username);
@@ -43,7 +45,7 @@ $conn->close();
 <html>
 <head>
     <title>Регистрация администратора</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-admin.css">
 </head>
 <body>
     <div class="container">

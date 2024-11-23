@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Окна с текстом</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #222;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .text {
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list li {
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: #444;
+            color: #eee;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">Регистрация/Войти в аккаунт</div>
+        <ul class="list">
+            <li>Администратор</li>
+            <li>Тренер</li>
+            <li>Спортмен</li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="title">BalancePro</div>
+        <div class="text">Это инновационный алгоритм, который помогает спортивным командам находить оптимальные дни для проведения матчей. Мы учитываем график обучения студентов, чтобы обеспечить баланс между учебной нагрузкой и спортивными мероприятиями.</div>
+    </div>
+
+    <div class="container">
+        <div class="title">Наши ключевые преимущества:</div>
+        <ul class="list">
+            <li>Интеллектуальный анализ данных: алгоритм учитывает расписания занятий, экзамены, и другие ключевые события в учебной жизни.</li>
+            <li>Повышение эффективности: мы подбираем дни, когда студенты наиболее свободны, чтобы максимально увеличить вовлечённость и успешность команды.</li>
+            <li>Гибкость настройки: система адаптируется под уникальные графики и потребности различных учебных учреждений и команд.</li>
+        </ul>
+    </div>
+
+    <button>Чёрные медведи</button>
+
+</body>
+</html>

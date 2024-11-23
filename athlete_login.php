@@ -1,70 +1,55 @@
 <?php
 require_once 'functions.php';
 $conn = connect_db();
-$error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = sanitizeInput($_POST["username"]);
-    $password = sanitizeInput($_POST["password"]);
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
 
-    $sql = "SELECT id, username, password FROM athletes WHERE username = ?";
+    $sql = "SELECT * FROM athletes WHERE username = ?";
     $stmt = $conn->prepare($sql);
-    if ($stmt) {
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($result->num_rows == 1) {
-            $athlete = $result->fetch_assoc();
-            if (password_verify($password, $athlete["password"])) {
-                session_start();
-                $_SESSION["athlete_id"] = $athlete["id"];
-                $_SESSION["athlete_logged_in"] = true;
-                header("Location: athlete_panel.php"); 
-                exit();
-            } else {
-                $error = "Неверный пароль.";
-            }
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row["password"])) {
+            session_start();
+            $_SESSION["athlete_id"] = $row["id"];
+            header("Location: athlete_panel.php"); 
+            exit();
         } else {
-            $error = "Пользователь не найден.";
+            $error = "Неверный пароль.";
         }
-        $stmt->close();
     } else {
-        $error = "Ошибка при подготовке запроса: " . $conn->error;
+        $error = "Пользователь не найден.";
     }
+    $stmt->close();
 }
 $conn->close();
-
-function sanitizeInput($data) {
-    global $conn;
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $conn->real_escape_string($data);
-}
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Вход для спортсмена</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-athlete.css">
 </head>
 <body>
     <div class="container">
         <h1>Вход для спортсмена</h1>
-        <?php if (!empty($error)): ?>
-            <p class="error"><?php echo $error; ?></p>
+        <?php if (isset($error)): ?>
+            <p style="color: red;"><?php echo $error; ?></p>
         <?php endif; ?>
         <form method="post">
             <label for="username">Имя пользователя:</label>
-            <input type="text" id="username" name="username" required><br>
+            <input type="text" id="username" name="username"><br>
             <label for="password">Пароль:</label>
-            <input type="password" id="password" name="password" required><br>
+            <input type="password" id="password" name="password"><br>
             <input type="submit" value="Войти">
         </form>
-        <a href="index.php">На главную</a>
+        <a href="index.php" class="return-button">Назад на главную страницу</a>
     </div>
 </body>
 </html>

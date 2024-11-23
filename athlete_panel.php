@@ -10,6 +10,7 @@ $conn = connect_db();
 
 $athleteId = $_SESSION["athlete_id"];
 
+// Fetch athlete's info
 $sqlAthleteInfo = "SELECT first_name, last_name, patronymic, birthdate, DATE_FORMAT(birthdate, '%d.%m.%Y') AS formatted_birthdate FROM athletes WHERE id = ?";
 $stmtAthleteInfo = $conn->prepare($sqlAthleteInfo);
 if ($stmtAthleteInfo === false) {
@@ -25,6 +26,9 @@ if ($stmtAthleteInfo === false) {
     }
 }
 
+
+
+// Fetch athlete's availability
 $sqlAvailability = "SELECT date, time_interval FROM athlete_availability WHERE athlete_id = ?";
 $stmtAvailability = $conn->prepare($sqlAvailability);
 if ($stmtAvailability === false) {
@@ -59,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmtInsert->bind_param("iss", $athleteId, $date, $time_interval);
                 if ($stmtInsert->execute()) {
                     $success = "Запись добавлена!";
+                    // Re-fetch availability data after successful insertion
                     $stmtAvailability->execute();
                     $resultAvailability = $stmtAvailability->get_result();
                 } else {
@@ -80,7 +85,7 @@ $conn->close();
 <html>
 <head>
     <title>Панель спортсмена</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-athlete.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -185,7 +190,8 @@ $conn->close();
             }
             ?>
         </ul>
-        <a href="index.php" class="return-button">Назад на главную страницу</a>
+
     </div>
+    <a href="index.php" class="return-button">Назад на главную страницу</a>
 </body>
 </html>

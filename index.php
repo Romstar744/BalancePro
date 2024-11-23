@@ -1,10 +1,12 @@
 <?php
 require_once 'functions.php';
 $conn = connect_db();
+// Pagination logic
 $matchesPerPage = 6;
 $currentPage = isset($_GET["page"]) && is_numeric($_GET["page"]) ? (int)$_GET["page"] : 1;
-$currentPage = max(1, $currentPage);
+$currentPage = max(1, $currentPage); // Ensure currentPage is at least 1
 
+// Get total number of matches
 $totalMatchesSql = "SELECT COUNT(*) AS total FROM matches";
 $totalMatchesResult = $conn->query($totalMatchesSql);
 if (!$totalMatchesResult) {
@@ -14,10 +16,12 @@ $totalMatchesRow = $totalMatchesResult->fetch_assoc();
 $totalMatches = $totalMatchesRow['total'];
 $totalPages = ceil($totalMatches / $matchesPerPage);
 
+// Handle invalid page numbers
 if ($currentPage > $totalPages && $totalPages > 0) {
-    $currentPage = $totalPages; 
+    $currentPage = $totalPages; // Redirect to last page if current page exceeds total pages
 }
 
+// Paginated query
 $offset = ($currentPage - 1) * $matchesPerPage;
 $sqlPaginated = "SELECT * FROM matches LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($sqlPaginated);
@@ -33,21 +37,23 @@ if (!$resultPaginated) {
     die("Ошибка при получении данных о матчах: " . $conn->error);
 }
 
+// Fetch first and last match dates for the current page
 $firstMatchDate = '';
 $lastMatchDate = '';
 if ($resultPaginated->num_rows > 0) {
-    $resultPaginated->data_seek(0); 
+    $resultPaginated->data_seek(0); // Rewind to the beginning
     $firstMatchRow = $resultPaginated->fetch_assoc();
     $firstMatchDate = $firstMatchRow['date'];
 
-    $resultPaginated->data_seek($resultPaginated->num_rows - 1); 
+    $resultPaginated->data_seek($resultPaginated->num_rows - 1); // Go to the last row
     $lastMatchRow = $resultPaginated->fetch_assoc();
     $lastMatchDate = $lastMatchRow['date'];
 
-    $resultPaginated->data_seek(0); 
+    $resultPaginated->data_seek(0); // Rewind back to the beginning for the loop
 }
 
 
+// Session handling
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -60,7 +66,7 @@ $isRegistered = isset($_SESSION['user_id']);
 <html>
 <head>
     <title>Balance Pro - Политех</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-index.css">
     
 </head>
 <body>
@@ -72,11 +78,12 @@ $isRegistered = isset($_SESSION['user_id']);
                     <img src="uploads/site_title.svg" alt="Название сайта" class="site-title">
                 </header>
             </div>
-            <div class="container">
+            <div class="container1">
                 <div class="titlereg">Регистрация/Войти в аккаунт</div>
                     <ul class="list">
                         <?php
-                            $isRegistered = false; 
+                            // Simulate checking for registration (replace with actual session check)
+                            $isRegistered = false; // Replace with a database check using sessions
 
                             if ($isRegistered) {
                                 echo '<a href="admin_login.php" class="login-button">Администратор</a>';
@@ -91,12 +98,12 @@ $isRegistered = isset($_SESSION['user_id']);
                     </ul>
                 </div>
 
-                <div class="container">
+                <div class="container2">
                 <div class="titlebalance">BalancePro</div>
                 <div class="textalgoritm">Это инновационный алгоритм, который помогает спортивным командам находить оптимальные дни для проведения матчей. Мы учитываем график обучения студентов, чтобы обеспечить баланс между учебной нагрузкой и спортивными мероприятиями.</div>
             </div>
 
-            <div class="container">
+            <div class="container3">
                 <div class="titlecluch">Наши ключевые преимущества:</div>
                 <ul class="list">
                     <li>Интеллектуальный анализ данных: алгоритм учитывает расписания занятий, экзамены, и другие ключевые события в учебной жизни.</li>
@@ -104,8 +111,6 @@ $isRegistered = isset($_SESSION['user_id']);
                     <li>Гибкость настройки: система адаптируется под уникальные графики и потребности различных учебных учреждений и команд.</li>
                 </ul>
             </div>
-
-            <button>Чёрные медведи</button>
 
             <div class="tablica">
                 <h1>Расписание матчей</h1>

@@ -14,13 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $birthdate = $_POST["birthdate"];
 
 
+    // Input validation
     if (empty($username) || empty($password) || empty($firstName) || empty($lastName) || empty($birthdate)) {
         $error = "Заполните все обязательные поля.";
     }
+    // Validate date format (YYYY-MM-DD) and check if it's a valid date.  More robust check.
     elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $birthdate) || !strtotime($birthdate)) {
         $error = "Неверный формат даты рождения (должен быть YYYY-MM-DD).";
     }
 
+    //Username is unique
     else {
         $sqlCheck = "SELECT id FROM athletes WHERE username = ?";
         $stmtCheck = $conn->prepare($sqlCheck);
@@ -59,7 +62,7 @@ $conn->close();
 <html>
 <head>
     <title>Регистрация спортсмена</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-athlete.css">
 </head>
 <body>
     <div class="container">

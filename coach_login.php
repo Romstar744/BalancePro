@@ -40,7 +40,7 @@ $conn->close();
 <html>
 <head>
     <title>Вход для тренера</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-coach.css">
 </head>
 <body>
     <main>
