@@ -8,7 +8,7 @@ $result = $conn->query($sql);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Черные Медведи - Политех</title>
+    <title>Balance Pro - Политех</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,9 +27,9 @@ $result = $conn->query($sql);
               echo '<a href="athlete_login.php" class="login-button">Вход Спортсмена</a>';
               echo '<a href="coach_login.php" class="login-button">Вход Тренера</a>';
             } else {
-              echo '<a href="admin_register.php" class="login-button">Регистрация Администратора</a>';
-              echo '<a href="athlete_register.php" class="login-button">Регистрация Спортсмена</a>';
-              echo '<a href="coach_register.php" class="login-button">Регистрация Тренера</a>';
+              echo '<a href="admin_register.php" class="login-button">Вход/Регистрация Администратора</a>';
+              echo '<a href="athlete_register.php" class="login-button">Вход/Регистрация Спортсмена</a>';
+              echo '<a href="coach_register.php" class="login-button">Вход/Регистрация Тренера</a>';
             }
         ?>
     </nav>

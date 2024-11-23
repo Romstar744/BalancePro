@@ -43,12 +43,13 @@ $conn->close();
             <p style="color: red;"><?php echo $error; ?></p>
         <?php endif; ?>
         <form method="post">
-            <label for="username">Username:</label>
+            <label for="username">Имя пользователя:</label>
             <input type="text" id="username" name="username"><br>
-            <label for="password">Password:</label>
+            <label for="password">Пароль:</label>
             <input type="password" id="password" name="password"><br>
             <input type="submit" value="Войти">
         </form>
+        <a href="index.php" class="return-button">Назад на главную страницу</a>
     </div>
 </body>
 </html>
