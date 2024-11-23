@@ -8,13 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $patronymic = trim($_POST["patronymic"]);
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
-    $phone = trim($_POST["phone"]); // Add phone number field
+    $phone = trim($_POST["phone"]);
 
     // Input validation
     if (empty($firstName) || empty($lastName) || empty($username) || empty($password) || empty($phone)) {
         $error = "Заполните все поля!";
     } else {
-        //Check if username already exists
+        // Check if username already exists
         $checkUsername = "SELECT * FROM coaches WHERE username = ?";
         $stmtCheck = $conn->prepare($checkUsername);
         $stmtCheck->bind_param("s", $username);
@@ -24,20 +24,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($resultCheck->num_rows > 0) {
             $error = "Пользователь с таким именем уже существует!";
         } else {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO coaches (first_name, last_name, patronymic, username, password, phone) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            if ($stmt === false) {
-                $error = "Ошибка при подготовке запроса: " . $conn->error;
+            // Check if phone number already exists
+            $checkPhone = "SELECT * FROM coaches WHERE phone = ?";
+            $stmtPhone = $conn->prepare($checkPhone);
+            $stmtPhone->bind_param("s", $phone);
+            $stmtPhone->execute();
+            $resultPhone = $stmtPhone->get_result();
+
+            if ($resultPhone->num_rows > 0) {
+                $error = "Пользователь с таким номером телефона уже существует!";
             } else {
-                $stmt->bind_param("ssssss", $firstName, $lastName, $patronymic, $username, $hashedPassword, $phone);
-                if ($stmt->execute()) {
-                    $success = "Регистрация прошла успешно! <a href='coach_login.php'>Войти</a>";
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO coaches (first_name, last_name, patronymic, username, password, phone) VALUES (?, ?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                if ($stmt === false) {
+                    $error = "Ошибка при подготовке запроса: " . $conn->error;
                 } else {
-                    $error = "Ошибка регистрации: " . $stmt->error;
+                    $stmt->bind_param("ssssss", $firstName, $lastName, $patronymic, $username, $hashedPassword, $phone);
+                    if ($stmt->execute()) {
+                        $success = "Регистрация прошла успешно! <a href='coach_login.php'>Войти</a>";
+                    } else {
+                        $error = "Ошибка регистрации: " . $stmt->error;
+                    }
+                    $stmt->close();
                 }
-                $stmt->close();
             }
+            $stmtPhone->close();
         }
         $stmtCheck->close();
     }
@@ -79,4 +91,4 @@ $conn->close();
         <a href="coach_login.php" class="return-button">Уже зарегистрированы? Войти</a>
     </div>
 </body>
-</html> 
+</html>
