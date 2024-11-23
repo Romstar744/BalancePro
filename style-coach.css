@@ -7,7 +7,7 @@ body {
     flex-direction: column; /* Align content vertically */
     align-items: center; /* Center content horizontally */
     min-height: 180vh; /* Ensure full viewport height */
-    overflow: auto;
+    overflow: hidden;
 }
 
 /* Фоновое изображение */
@@ -305,20 +305,57 @@ form {
     width: 300px; /* Adjust as needed */
     margin: 20px auto; /* Center the form */
     padding: 20px;
-    background-color: #fff;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form1 {
+    width: 500px; /* Adjust as needed */
+    height: 400px;
+    margin: 20px auto; /* Center the form */
+    padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post1 {
+    width: 300px; /* Adjust as needed */
+    height: 190px; /* Adjust as needed */
+    margin: 20px auto; /* Center the form */
+    padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.text222{
+    text-align: left;
+    background-color: #333;
+}
+
+.form2 {
+    width: 500px; /* Adjust as needed */
+    height: 260px;
+    margin: 20px auto; /* Center the form */
+    padding: 20px;
+    background-color: #333;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
+    color: rgba(160, 185, 241, 0.88);
 }
 
 input[type="text"],
 input[type="password"],
 input[type="tel"],
-input[type="date"] { /*Added date input*/
+input[type="date"],
+input[type="username"] { /*Added date input*/
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -328,7 +365,7 @@ input[type="date"] { /*Added date input*/
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #404740;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -338,7 +375,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #868786;
 }
 
 a {

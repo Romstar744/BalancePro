@@ -14,16 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $birthdate = $_POST["birthdate"];
 
 
-    // Input validation
     if (empty($username) || empty($password) || empty($firstName) || empty($lastName) || empty($birthdate)) {
         $error = "Заполните все обязательные поля.";
     }
-    // Validate date format (YYYY-MM-DD) and check if it's a valid date.  More robust check.
     elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $birthdate) || !strtotime($birthdate)) {
         $error = "Неверный формат даты рождения (должен быть YYYY-MM-DD).";
     }
 
-    //Username is unique
     else {
         $sqlCheck = "SELECT id FROM athletes WHERE username = ?";
         $stmtCheck = $conn->prepare($sqlCheck);
@@ -64,38 +61,42 @@ $conn->close();
     <title>Регистрация спортсмена</title>
     <link rel="stylesheet" href="style-athlete.css">
 </head>
-<body>
-    <div class="container">
-        <h1>Регистрация спортсмена</h1>
-        <?php if ($error): ?>
-            <p class="error"><?php echo $error; ?></p>
-        <?php endif; ?>
-        <?php if ($success): ?>
-            <p class="success"><?php echo $success; ?></p>
-        <?php endif; ?>
-        <form method="post">
-            <label for="username">Имя пользователя:</label><br>
-            <input type="text" id="username" name="username" required><br>
+<d>
+    <div class="background"></div>
+        <div class="content">
+            <div class="container">
+                <h1>Регистрация спортсмена</h1>
+                <?php if ($error): ?>
+                    <p class="error"><?php echo $error; ?></p>
+                <?php endif; ?>
+                <?php if ($success): ?>
+                    <p class="success"><?php echo $success; ?></p>
+                <?php endif; ?>
+                <form method="post">
+                    <label for="username">Имя пользователя:</label><br>
+                    <input type="text" id="username" name="username" required><br>
 
-            <label for="password">Пароль:</label><br>
-            <input type="password" id="password" name="password" required><br>
+                    <label for="password">Пароль:</label><br>
+                    <input type="password" id="password" name="password" required><br>
 
-            <label for="first_name">Имя:</label><br>
-            <input type="text" id="first_name" name="first_name" required><br>
+                    <label for="first_name">Имя:</label><br>
+                    <input type="text" id="first_name" name="first_name" required><br>
 
-            <label for="last_name">Фамилия:</label><br>
-            <input type="text" id="last_name" name="last_name" required><br>
+                    <label for="last_name">Фамилия:</label><br>
+                    <input type="text" id="last_name" name="last_name" required><br>
 
-            <label for="patronymic">Отчество:</label><br>
-            <input type="text" id="patronymic" name="patronymic"><br>
+                    <label for="patronymic">Отчество:</label><br>
+                    <input type="text" id="patronymic" name="patronymic"><br>
 
-            <label for="birthdate">Дата рождения (YYYY-MM-DD):</label><br>
-            <input type="date" id="birthdate" name="birthdate" required><br>
+                    <label for="birthdate">Дата рождения (YYYY-MM-DD):</label><br>
+                    <input type="date" id="birthdate" name="birthdate" required><br>
 
-            <input type="submit" value="Зарегистрироваться">
-        </form>
-        <a href="index.php">На главную</a>
-        <a href="athlete_login.php" class="return-button">Уже зарегистрированы? Войти</a>
+                    <input type="submit" value="Зарегистрироваться">
+                </form>
+            </div>
+            <a href="index.php">На главную</a>
+            <a href="athlete_login.php" class="return-button">Уже зарегистрированы? Войти</a>
+        </div>
     </div>
 </body>
 </html>

@@ -7,7 +7,7 @@ body {
     flex-direction: column; /* Align content vertically */
     align-items: center; /* Center content horizontally */
     min-height: 180vh; /* Ensure full viewport height */
-    overflow: auto;
+    overflow: hidden;
 }
 
 /* Фоновое изображение */
@@ -67,7 +67,7 @@ body {
     z-index: 3; /* Выше остальных слоев */
     color: white; /* Цвет текста */
     text-align: center; /* Центрирование текста */
-    padding-top: 20px; /* Отступ сверху */
+ /* Отступ сверху */
     flex-direction: column; /* Align content vertically */
     align-items: center; /* Center content horizontally */
     min-height: 100vh; /* Ensure full viewport height */
@@ -301,24 +301,73 @@ nav {
     }
 }
 
-form {
+.post {
     width: 300px; /* Adjust as needed */
+    height: 280px; /* Adjust as needed */
     margin: 20px auto; /* Center the form */
     padding: 20px;
-    background-color: #fff;
+    background-color: #333;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+form {
+    width: 300px; /* Adjust as needed */
+    height: 530px; /* Adjust as needed */
+    margin: 20px auto; /* Center the form */
+    padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post1 {
+    width: 300px; /* Adjust as needed */
+    height: 190px; /* Adjust as needed */
+    margin: 20px auto; /* Center the form */
+    padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+span {
+    color: #000000;
+}
+
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
+    color: rgba(160, 185, 241, 0.88);
+}
+
+.info-item {
+    display: block;
+    margin-bottom: 0px;
+    color: rgba(160, 185, 241, 0.88);
+    text-align: left;
+}
+
+.info-item2 {
+    display: block;
+    margin-bottom: 0px;
+    color: rgba(160, 185, 241, 0.88);
+    text-align: left;
+}
+
+h2 {
+    color: #fff;
+}
+
+h1 {
+    color: #fff;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="tel"],
-input[type="date"] { /*Added date input*/
+input[type="date"],
+input[type="username"] { /*Added date input*/
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -328,7 +377,7 @@ input[type="date"] { /*Added date input*/
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #404740;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -338,7 +387,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #868786;
 }
 
 a {

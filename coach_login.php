@@ -44,19 +44,24 @@ $conn->close();
 </head>
 <body>
     <main>
-        <div class="container">
-            <h1>Вход для тренера</h1>
-            <?php if (isset($error)): ?>
-                <p class="error-message"><?php echo $error; ?></p>
-            <?php endif; ?>
-            <form method="post">
-                <label for="username">Имя пользователя:</label>
-                <input type="text" id="username" name="username" required><br>
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" required><br>
-                <input type="submit" value="Войти">
-            </form>
-            <a href="index.php" class="return-button">Назад на главную страницу</a>
+        <div class="background"></div>
+            <div class="content">
+                <div class="container">
+                    <h1>Вход для тренера</h1>
+                    <?php if (isset($error)): ?>
+                        <p class="error-message"><?php echo $error; ?></p>
+                    <?php endif; ?>
+                    <form class="post1" method="post">
+                        <label for="username">Имя пользователя:</label><br>
+                        <input type="text" id="username" name="username" required><br>
+                        <label for="password">Пароль:</label><br>
+                        <input type="password" id="password" name="password" required><br>
+                        <input type="submit" value="Войти">
+                    </form>
+                </div>
+                <a href="index.php" class="return-button">Назад на главную страницу</a>
+                <a href="coach_register.php">Не зарегистрированы? Регистрация</a>
+            </div>
         </div>
     </main>
 </body>

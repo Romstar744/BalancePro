@@ -10,7 +10,6 @@ $conn = connect_db();
 
 $athleteId = $_SESSION["athlete_id"];
 
-// Fetch athlete's info
 $sqlAthleteInfo = "SELECT first_name, last_name, patronymic, birthdate, DATE_FORMAT(birthdate, '%d.%m.%Y') AS formatted_birthdate FROM athletes WHERE id = ?";
 $stmtAthleteInfo = $conn->prepare($sqlAthleteInfo);
 if ($stmtAthleteInfo === false) {
@@ -26,9 +25,6 @@ if ($stmtAthleteInfo === false) {
     }
 }
 
-
-
-// Fetch athlete's availability
 $sqlAvailability = "SELECT date, time_interval FROM athlete_availability WHERE athlete_id = ?";
 $stmtAvailability = $conn->prepare($sqlAvailability);
 if ($stmtAvailability === false) {
@@ -63,7 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmtInsert->bind_param("iss", $athleteId, $date, $time_interval);
                 if ($stmtInsert->execute()) {
                     $success = "Запись добавлена!";
-                    // Re-fetch availability data after successful insertion
                     $stmtAvailability->execute();
                     $resultAvailability = $stmtAvailability->get_result();
                 } else {
@@ -82,7 +77,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html>
+<div>
 <head>
     <title>Панель спортсмена</title>
     <link rel="stylesheet" href="style-athlete.css">
@@ -143,55 +138,58 @@ $conn->close();
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Панель спортсмена</h1>
+    <div class="background"></div>
+        <div class="content">    
+            <div class="container">
+                <h1>Панель спортсмена</h1>
 
-        <div class="info-section">
-            <h2>Информация о пользователе</h2>
-            <?php if (isset($athleteInfo)): ?>
-                <div class="info-item"><span>Имя:</span> <?php echo $athleteInfo['first_name']; ?></div>
-                <div class="info-item"><span>Фамилия:</span> <?php echo $athleteInfo['last_name']; ?></div>
-                <div class="info-item"><span>Отчество:</span> <?php echo $athleteInfo['patronymic']; ?></div>
-                <div class="info-item"><span>Дата рождения:</span> <?php echo $athleteInfo['formatted_birthdate']; ?></div>
-            <?php else: ?>
-                <p class="error-message">Ошибка при загрузке информации о пользователе.</p>
-            <?php endif; ?>
+                    <form class="post "method="post">
+                        <h2>Информация о пользователе</h2>
+                            <?php if (isset($athleteInfo)): ?>
+                                <div class="info-item"><span>Имя:</span> <?php echo $athleteInfo['first_name']; ?></div>
+                                <div class="info-item"><span>Фамилия:</span> <?php echo $athleteInfo['last_name']; ?></div>
+                                <div class="info-item"><span>Отчество:</span> <?php echo $athleteInfo['patronymic']; ?></div>
+                                <div class="info-item"><span>Дата рождения:</span> <?php echo $athleteInfo['formatted_birthdate']; ?></div>
+                            <?php else: ?>
+                                <p class="error-message">Ошибка при загрузке информации о пользователе.</p>
+                            <?php endif; ?>
+                    </form>
+
+                    <?php if (isset($success)): ?>
+                        <p style="color: green;"><?php echo $success; ?></p>
+                    <?php endif; ?>
+                    <?php if (isset($error)): ?>
+                        <p class="error-message"><?php echo $error; ?></p>
+                    <?php endif; ?>
+
+                    <form class="post1" method="post">
+                        <label for="datepicker">Дата:</label>
+                        <input type="text" id="datepicker" name="date" required>
+                        <label for="time_interval">Время (в формате ЧЧ:ММ-ЧЧ:ММ):</label>
+                        <input type="text" id="time_interval" name="time_interval" required>
+                        <input type="submit" value="Сохранить">
+                        <button type="button" onclick="clearForm()">Очистить</button>
+                    </form>
+
+                    <ul class="availability-list">
+                        <?php
+                        if (isset($resultAvailability) && $resultAvailability->num_rows > 0) {
+                            while ($row = $resultAvailability->fetch_assoc()) {
+                                echo '<li class="availability-item">';
+                                echo '<span>Дата: ' . $row["date"] . '</span>';
+                                echo '<span>Время: ' . $row["time_interval"] . '</span>';
+                                echo '</li>';
+                            }
+                        } else {
+                            if (!isset($error)) {
+                                echo '<li class="availability-item"><p>Занятостей нет.</p></li>';
+                            }
+                        }
+                    ?>
+                    </ul>
+            </div>
+            <a href="index.php" class="return-button">Назад на главную страницу</a>
         </div>
-
-        <?php if (isset($success)): ?>
-            <p style="color: green;"><?php echo $success; ?></p>
-        <?php endif; ?>
-        <?php if (isset($error)): ?>
-            <p class="error-message"><?php echo $error; ?></p>
-        <?php endif; ?>
-
-        <form method="post">
-            <label for="datepicker">Дата:</label>
-            <input type="text" id="datepicker" name="date" required>
-            <label for="time_interval">Время (в формате ЧЧ:ММ-ЧЧ:ММ):</label>
-            <input type="text" id="time_interval" name="time_interval" required>
-            <input type="submit" value="Сохранить">
-            <button type="button" onclick="clearForm()">Очистить</button>
-        </form>
-
-        <ul class="availability-list">
-            <?php
-            if (isset($resultAvailability) && $resultAvailability->num_rows > 0) {
-                while ($row = $resultAvailability->fetch_assoc()) {
-                    echo '<li class="availability-item">';
-                    echo '<span>Дата: ' . $row["date"] . '</span>';
-                    echo '<span>Время: ' . $row["time_interval"] . '</span>';
-                    echo '</li>';
-                }
-            } else {
-                if (!isset($error)) {
-                    echo '<li class="availability-item"><p>Занятостей нет.</p></li>';
-                }
-            }
-            ?>
-        </ul>
-
     </div>
-    <a href="index.php" class="return-button">Назад на главную страницу</a>
 </body>
 </html>
