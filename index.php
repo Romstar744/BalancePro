@@ -78,7 +78,7 @@ $isRegistered = isset($_SESSION['user_id']);
                     <img src="uploads/site_title.svg" alt="Название сайта" class="site-title">
                 </header>
             </div>
-            <div class="container1">
+            <div class="container">
                 <div class="titlereg">Регистрация/Войти в аккаунт</div>
                     <ul class="list">
                         <?php
@@ -90,7 +90,7 @@ $isRegistered = isset($_SESSION['user_id']);
                                 echo '<a href="athlete_login.php" class="login-button">Спортсмен</a>';
                                 echo '<a href="coach_login.php" class="login-button">Тренер</a>';
                             } else {
-                                echo '<a href="admin_register.php" class="login-button">Администратор</a>';
+                                echo '<a href="admin_login.php" class="login-button">Администратор</a>';
                                 echo '<a href="athlete_register.php" class="login-button">Спортсмен</a>';
                                 echo '<a href="coach_register.php" class="login-button">Тренер</a>';
                         }
@@ -98,12 +98,12 @@ $isRegistered = isset($_SESSION['user_id']);
                     </ul>
                 </div>
 
-                <div class="container2">
+                <div class="container">
                 <div class="titlebalance">BalancePro</div>
                 <div class="textalgoritm">Это инновационный алгоритм, который помогает спортивным командам находить оптимальные дни для проведения матчей. Мы учитываем график обучения студентов, чтобы обеспечить баланс между учебной нагрузкой и спортивными мероприятиями.</div>
             </div>
 
-            <div class="container3">
+            <div class="container">
                 <div class="titlecluch">Наши ключевые преимущества:</div>
                 <ul class="list">
                     <li>Интеллектуальный анализ данных: алгоритм учитывает расписания занятий, экзамены, и другие ключевые события в учебной жизни.</li>

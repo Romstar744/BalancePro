@@ -58,7 +58,7 @@ $conn->close();
 <html>
 <head>
     <title>Регистрация тренера</title>
-    <link rel="stylesheet" href="style-coach.css">
+    <link rel="stylesheet" href="style-coach_login_reg.css">
 </head>
 <body>
     <div class="background"></div>
