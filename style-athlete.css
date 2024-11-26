@@ -64,7 +64,7 @@ body {
 .content {
     position: relative; /* Для размещения текста поверх размытого фона */
     z-index: 3; /* Выше остальных слоев */
-    color: white; /* Цвет текста */
+    color: black; /* Цвет текста */
     text-align: center; /* Центрирование текста */
  /* Отступ сверху */
     flex-direction: column; /* Align content vertically */
