@@ -49,7 +49,7 @@ function sanitizeInput($data) {
 <html>
 <head>
     <title>Вход для спортсмена</title>
-    <link rel="stylesheet" href="style-athlete.css">
+    <link rel="stylesheet" href="style-athlete_login_reg.css">
 </head>
 <body>
     <div class="background"></div>

@@ -7,6 +7,7 @@ body {
     flex-direction: column; /* Align content vertically */
     align-items: center; /* Center content horizontally */
     min-height: 180vh; /* Ensure full viewport height */
+    overflow: hidden;
 }
 
 /* Фоновое изображение */

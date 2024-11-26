@@ -59,7 +59,7 @@ $conn->close();
 <html>
 <head>
     <title>Регистрация спортсмена</title>
-    <link rel="stylesheet" href="style-athlete.css">
+    <link rel="stylesheet" href="style-athlete_login_reg.css">
 </head>
 <d>
     <div class="background"></div>
